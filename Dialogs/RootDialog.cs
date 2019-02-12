@@ -22,9 +22,9 @@ namespace EmergencyServicesBot.Dialogs
     public class RootDialog : IDialog<object>
     {
         static ResourceManager translateDialog = new ResourceManager("EmergencyServicesBot.Resources.Resources", Assembly.GetExecutingAssembly());
-              
+
         private const string userDataCultureKey = @"cultureInfo";
-                      
+
         public async Task StartAsync(IDialogContext context)
         {
             /* Wait until the first message is received from the conversation and call MessageReceviedAsync 
@@ -85,7 +85,7 @@ namespace EmergencyServicesBot.Dialogs
                     {
                         var detectedLanguageXmlResponse = XDocument.Parse(await langDetectClient.GetStringAsync($@"{ConfigurationManager.AppSettings[@"TranslatorEndpoint"]}/Detect?text={HttpUtility.UrlEncode(userText)}"));
 
-                        context.UserData.SetValue(@"userLanguage", detectedLanguageXmlResponse.Root.Value);
+                        context.UserData.SetValue(@"userLanguage", detectedLanguageXmlResponse?.Root?.Value);
                         var userCulture = GetCultureInfoFromLanguageId(detectedLanguageXmlResponse?.Root?.Value);
 
                         context.UserData.SetValue(userDataCultureKey, userCulture);
@@ -142,7 +142,7 @@ namespace EmergencyServicesBot.Dialogs
             //TODO change with resource entry directly
             if ((choice.IndexOf(@"get answers", 0, StringComparison.OrdinalIgnoreCase) != -1) ||
                 (choice.IndexOf(@"Obtener Respuestas", 0, StringComparison.OrdinalIgnoreCase) != -1) ||
-                (choice.IndexOf(@"Obtenir les réponses", 0, StringComparison.OrdinalIgnoreCase) != -1) ||                
+                (choice.IndexOf(@"Obtenir les réponses", 0, StringComparison.OrdinalIgnoreCase) != -1) ||
                 (choice.IndexOf(@"其他问题", 0, StringComparison.OrdinalIgnoreCase) != -1))
                 context.Call(new QandADialog(), DoneWithSubdialog);
             else if ((choice.IndexOf(@"Select language", 0, StringComparison.OrdinalIgnoreCase) != -1) ||
