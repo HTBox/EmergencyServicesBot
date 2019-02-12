@@ -161,10 +161,12 @@ namespace EmergencyServicesBot.Dialogs
             }
         }
 
+        //TODO change to use resources
         private bool IsDoneCommand(string commandText) =>
             commandText.Equals(@"done", StringComparison.OrdinalIgnoreCase)
             || commandText.StartsWith(@"no", StringComparison.OrdinalIgnoreCase)
             || commandText.Equals(@"exit", StringComparison.OrdinalIgnoreCase)
+            || commandText.Equals(@"quitter", StringComparison.OrdinalIgnoreCase)
             || commandText.Equals(@"quit", StringComparison.OrdinalIgnoreCase);
     }
 }

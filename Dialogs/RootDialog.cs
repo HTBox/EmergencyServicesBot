@@ -14,6 +14,7 @@ using System.Xml.Linq;
 using System.Configuration;
 using System.Net.Http;
 using System.Web;
+using System.Diagnostics;
 
 namespace EmergencyServicesBot.Dialogs
 {
@@ -22,11 +23,7 @@ namespace EmergencyServicesBot.Dialogs
     {
         static ResourceManager translateDialog = new ResourceManager("EmergencyServicesBot.Resources.Resources", Assembly.GetExecutingAssembly());
 
-        //Set the language to be used; you can change this on-demand to change the langauage across the app
-        //You will pass this everytime you request a value from the resx file
-        static CultureInfo ciEnglish = new CultureInfo("en-US");
-        static CultureInfo ciSpanish = new CultureInfo("es-US");
-        static CultureInfo ciChinese = new CultureInfo("zh-CN");
+        private const string userDataCultureKey = @"cultureInfo";
 
         public async Task StartAsync(IDialogContext context)
         {
@@ -62,7 +59,7 @@ namespace EmergencyServicesBot.Dialogs
 
                 PromptDialog.Choice(context, UserChoiceMade, choices, welcomeMessage);
             }
-            
+
         }
 
         private static string[] GetMainMenuChoices(IDialogContext context)
@@ -78,65 +75,79 @@ namespace EmergencyServicesBot.Dialogs
 
         private async Task DetectAndSaveUserLanguageAsync(IDialogContext context, string userText)
         {
-            
-            using (var langDetectClient = new HttpClient())
+            if (!context.UserData.TryGetValue(@"userLanguage", out string userLanguage))
             {
-                langDetectClient.DefaultRequestHeaders.Add(@"Ocp-Apim-Subscription-Key", ConfigurationManager.AppSettings[@"TranslatorApiKey"]);
-
-                try
+                using (var langDetectClient = new HttpClient())
                 {
-                    var detectedLanguageXmlResponse = XDocument.Parse(await langDetectClient.GetStringAsync($@"{ConfigurationManager.AppSettings[@"TranslatorEndpoint"]}/Detect?text={HttpUtility.UrlEncode(userText)}"));
+                    langDetectClient.DefaultRequestHeaders.Add(@"Ocp-Apim-Subscription-Key", ConfigurationManager.AppSettings[@"TranslatorApiKey"]);
 
-                    context.UserData.SetValue(@"userLanguage", detectedLanguageXmlResponse.Root.Value);
-
-                    if (detectedLanguageXmlResponse.Root.Value == "en")
+                    try
                     {
-                        context.UserData.SetValue(@"cultureInfo", ciEnglish);
-                    }
-                    else if (detectedLanguageXmlResponse.Root.Value == "es")
-                    {
-                        context.UserData.SetValue(@"cultureInfo", ciSpanish);
-                    }
-                    else if (detectedLanguageXmlResponse.Root.Value == "zh-CN")
-                    {
-                        context.UserData.SetValue(@"cultureInfo", ciChinese);
-                    }
-                    else { context.UserData.SetValue(@"cultureInfo", ciEnglish); }
+                        var detectedLanguageXmlResponse = XDocument.Parse(await langDetectClient.GetStringAsync($@"{ConfigurationManager.AppSettings[@"TranslatorEndpoint"]}/Detect?text={HttpUtility.UrlEncode(userText)}"));
 
+                        context.UserData.SetValue(@"userLanguage", detectedLanguageXmlResponse?.Root?.Value);
+                        var userCulture = GetCultureInfoFromLanguageId(detectedLanguageXmlResponse?.Root?.Value);
 
+                        context.UserData.SetValue(userDataCultureKey, userCulture);
+                    }
+                    catch (Exception ex)
+                    {
+                        Trace.TraceError($@"Error detecting language from inital user chat: {ex.ToString()}");
+                    }
                 }
-                catch (Exception ex)
-                {
-                    System.Diagnostics.Trace.TraceError($@"Error detecting language from inital user chat: {ex.ToString()}");
-                }
+
+
+            }
+            else
+            {
+                var userCulture = GetCultureInfoFromLanguageId(userLanguage);
+
+                context.UserData.SetValue(userDataCultureKey, userCulture);
+            }
+        }
+
+        private CultureInfo GetCultureInfoFromLanguageId(string languageId)
+        {
+            if (string.IsNullOrWhiteSpace(languageId))
+            {
+                return LanguageConst.ciEnglish;
             }
 
-                if (context.UserData.GetValue<String>("userLanguage") == "en")
-                {
-                    context.UserData.SetValue(@"cultureInfo", ciEnglish);
-                }
-                else if (context.UserData.GetValue<String>("userLanguage") == "es")
-                {
-                    context.UserData.SetValue(@"cultureInfo", ciSpanish);
-                }
-                else if (context.UserData.GetValue<String>("userLanguage") == "zh-CN")
-                {
-                    context.UserData.SetValue(@"cultureInfo", ciChinese);
-                }
-                else { context.UserData.SetValue(@"cultureInfo", ciEnglish); }
-            
+            CultureInfo userCulture = LanguageConst.ciEnglish;
+
+            switch (languageId)
+            {
+                case LanguageConst.esLanguageId:
+                    userCulture = LanguageConst.ciSpanish;
+                    break;
+                case LanguageConst.zhLanguageId:
+                    userCulture = LanguageConst.ciChinese;
+                    break;
+                case LanguageConst.frLanguageId:
+                    userCulture = LanguageConst.ciFrench;
+                    break;
+                case LanguageConst.enLanguageId:
+                default:
+                    userCulture = LanguageConst.ciEnglish;
+                    break;
+            }
+
+            return userCulture;
         }
 
         private async Task UserChoiceMade(IDialogContext context, IAwaitable<string> result)
         {
             var choice = await result;
 
+            //TODO change with resource entry directly
             if ((choice.IndexOf(@"get answers", 0, StringComparison.OrdinalIgnoreCase) != -1) ||
                 (choice.IndexOf(@"Obtener Respuestas", 0, StringComparison.OrdinalIgnoreCase) != -1) ||
+                (choice.IndexOf(@"Obtenir les réponses", 0, StringComparison.OrdinalIgnoreCase) != -1) ||
                 (choice.IndexOf(@"其他问题", 0, StringComparison.OrdinalIgnoreCase) != -1))
                 context.Call(new QandADialog(), DoneWithSubdialog);
             else if ((choice.IndexOf(@"Select language", 0, StringComparison.OrdinalIgnoreCase) != -1) ||
                 (choice.IndexOf(@"Seleccione el idioma", 0, StringComparison.OrdinalIgnoreCase) != -1) ||
+                (choice.IndexOf(@"Sélectionner la langue", 0, StringComparison.OrdinalIgnoreCase) != -1) ||
                 (choice.IndexOf(@"选择语言", 0, StringComparison.OrdinalIgnoreCase) != -1))
                 context.Call(new SetLanguage(), DoneWithSubdialog);
         }
@@ -165,26 +176,26 @@ namespace EmergencyServicesBot.Dialogs
 
             ConnectorClient client = new ConnectorClient(new Uri(activity.ServiceUrl));
 
-            var title = translateDialog.GetString("WelcomeTitle", ciEnglish);
-        
+            var title = translateDialog.GetString("WelcomeTitle", LanguageConst.ciEnglish);
+
             IList<Attachment> cardsAttachment = new List<Attachment>();
             var reply = ((Activity)activity).CreateReply();
-            
+
             CardImage CI = new CardImage
             {
-                Url = translateDialog.GetString("WelcomeImageUrl", ciEnglish),
+                Url = translateDialog.GetString("WelcomeImageUrl", LanguageConst.ciEnglish),
             };
 
-
+            //TODO change by adding resources instead of hardcoded text
             var heroCard = new HeroCard
             {
                 Title = title,
-                Subtitle = "Hello. Hola. 你好.",
-                Text = "Say \"hi\" to begin, diga \"hola\" para comenzar, 说“嗨”开始",
+                Subtitle = "Hello. Hola. 你好. Bonjour.",
+                Text = "Say \"hi\" to begin, diga \"hola\" para comenzar, 说“嗨”开始, dites \"Bonjour\" pour commencer",
                 Images = new List<CardImage> { CI }
             };
 
-           
+
             cardsAttachment.Add(heroCard.ToAttachment());
 
             reply.Attachments = cardsAttachment;
@@ -203,6 +214,6 @@ namespace EmergencyServicesBot.Dialogs
         // Required: subscriptionKey, knowledgebaseId, 
         // Optional: defaultMessage, scoreThreshold[Range 0.0 – 1.0]
         public BasicQnAMakerDialog() : base(new QnAMakerService(new QnAMakerAttribute(Utils.GetAppSetting("QnASubscriptionKey"), Utils.GetAppSetting("QnAKnowledgebaseId"), "I could not find an answer to your question. Please try again or contact Houston 311.", 0.5)))
-        {}
+        { }
     }
 }
