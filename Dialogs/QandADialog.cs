@@ -52,8 +52,8 @@ namespace EmergencyServicesBot.Dialogs
             {
                 using (var qnaClient = new HttpClient { BaseAddress = new Uri(ConfigurationManager.AppSettings[@"QnAendpoint"] + ConfigurationManager.AppSettings[@"QnAKnowledgebaseId"] + "/generateanswer" )}) 
                 {
-                    qnaClient.DefaultRequestHeaders.Add(@"Ocp-Apim-Subscription-Key", ConfigurationManager.AppSettings[@"QnASubscriptionKey"]);
-                                                            
+                    qnaClient.DefaultRequestHeaders.Add("Authorization", $"EndpointKey {ConfigurationManager.AppSettings[@"QnASubscriptionKey"]}");
+
                     string ApiKey = ConfigurationManager.AppSettings[@"TranslatorApiKey"];
                     string targetLang = context.UserData.GetValue<string>(@"userLanguage");
                     string knowledgeBaseLang = ConfigurationManager.AppSettings[@"QnAKnowledgebaseLanguage"];
