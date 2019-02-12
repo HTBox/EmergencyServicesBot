@@ -69,7 +69,7 @@ In some steps you will be asked to obtain and save a key value pair.  Please be 
 
 5. Verify that you have a saved value for "QnAKnowledgebaseId", "QnASubscriptionKey", "BotName", "MicrosoftAppId", "MicrosoftAppPassword", and "DirectLineSecret"
     
-    Once you have all of these values, click the "Deploy to Azure" Button below and supply the values where indicated:
+    Once you have all of these [values](./Docs/azure-deploy-parameters.md), click the "Deploy to Azure" Button below and supply the values where indicated:
     
     [![Deploy to Azure](http://azuredeploy.net/deploybutton.png)](https://azuredeploy.net/)
     
