@@ -50,7 +50,8 @@ namespace EmergencyServicesBot.Dialogs
             }
             else
             {
-                using (var qnaClient = new HttpClient { BaseAddress = new Uri(ConfigurationManager.AppSettings[@"QnAendpoint"] + "/knowledgebases/" + ConfigurationManager.AppSettings[@"QnAKnowledgebaseId"] + "/generateAnswer" )}) 
+
+                using (var qnaClient = new HttpClient { BaseAddress = new Uri(ConfigurationManager.AppSettings[@"QnAendpoint"] + "/qnamaker/knowledgebases/" + ConfigurationManager.AppSettings[@"QnAKnowledgebaseId"] + "/generateAnswer" )}) 
                 {
                     qnaClient.DefaultRequestHeaders.Add("Authorization", $"EndpointKey {ConfigurationManager.AppSettings[@"QnASubscriptionKey"]}");
 
