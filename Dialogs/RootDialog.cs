@@ -15,6 +15,9 @@ using System.Configuration;
 using System.Net.Http;
 using System.Web;
 using System.Diagnostics;
+using System.Net;
+using System.IO;
+using System.Text;
 
 namespace EmergencyServicesBot.Dialogs
 {
@@ -77,27 +80,41 @@ namespace EmergencyServicesBot.Dialogs
         {
             if (!context.UserData.TryGetValue(@"userLanguage", out string userLanguage))
             {
-                using (var langDetectClient = new HttpClient())
-                {
-                    langDetectClient.DefaultRequestHeaders.Add(@"Ocp-Apim-Subscription-Key", ConfigurationManager.AppSettings[@"TranslatorApiKey"]);
 
-                    try
-                    {
-                        var detectedLanguageXmlResponse = XDocument.Parse(await langDetectClient.GetStringAsync($@"{ConfigurationManager.AppSettings[@"TranslatorEndpoint"]}/Detect?text={HttpUtility.UrlEncode(userText)}"));
+                string detectUri = string.Format(ConfigurationManager.AppSettings[@"TranslatorEndpoint"], "detect");
 
-                        context.UserData.SetValue(@"userLanguage", detectedLanguageXmlResponse?.Root?.Value);
-                        var userCulture = GetCultureInfoFromLanguageId(detectedLanguageXmlResponse?.Root?.Value);
+                HttpWebRequest detectLanguageWebRequest = (HttpWebRequest)WebRequest.Create(detectUri);
+                detectLanguageWebRequest.Headers.Add("Ocp-Apim-Subscription-Key", ConfigurationManager.AppSettings[@"TranslatorApiKey"]);
+                detectLanguageWebRequest.ContentType = "application/json; charset=utf-8";
+                detectLanguageWebRequest.Method = "POST";
 
-                        context.UserData.SetValue(userDataCultureKey, userCulture);
-                    }
-                    catch (Exception ex)
-                    {
-                        Trace.TraceError($@"Error detecting language from inital user chat: {ex.ToString()}");
-                    }
-                }
+                // Send request
+                var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+                string jsonText = serializer.Serialize(userText);
 
+                string body = "[{ \"Text\": " + jsonText + " }]";
+                byte[] data = Encoding.UTF8.GetBytes(body);
 
+                detectLanguageWebRequest.ContentLength = data.Length;
+
+                using (var requestStream = detectLanguageWebRequest.GetRequestStream())
+                    requestStream.Write(data, 0, data.Length);
+
+                HttpWebResponse response = (HttpWebResponse)detectLanguageWebRequest.GetResponse();
+
+                // Read and parse JSON response
+                var responseStream = response.GetResponseStream();
+                var jsonString = new StreamReader(responseStream, Encoding.GetEncoding("utf-8")).ReadToEnd();
+                dynamic jsonResponse = serializer.DeserializeObject(jsonString);
+
+                // Fish out the detected language code
+                var languageInfo = jsonResponse[0];
+                var detectedLanguage = languageInfo["language"];
+                context.UserData.SetValue(@"userLanguage", detectedLanguage);
+                context.UserData.SetValue(userDataCultureKey, GetCultureInfoFromLanguageId(detectedLanguage));
+                
             }
+
             else
             {
                 var userCulture = GetCultureInfoFromLanguageId(userLanguage);
