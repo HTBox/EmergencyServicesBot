@@ -59,6 +59,12 @@ namespace EmergencyServicesBot.Dialogs
                 selectedLanguage = LanguageConst.frLanguageName;
                 culture = LanguageConst.ciFrench;
             }
+            else if (choice.IndexOf(LanguageConst.trLanguageName, 0, StringComparison.OrdinalIgnoreCase) != -1)
+            {
+                choice = LanguageConst.trLanguageId;
+                selectedLanguage = LanguageConst.trLanguageName;
+                culture = LanguageConst.ciTurkish;
+            }
             else
             {
                 choice = LanguageConst.enLanguageId;

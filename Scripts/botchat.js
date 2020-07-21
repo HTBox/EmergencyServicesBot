@@ -784,7 +784,7 @@
 
                 /*function replaceEntities(str) {
                   if (str.indexOf('&') < 0) { return str; }
-                
+
                   return str.replace(ENTITY_RE, replaceEntityPattern);
                 }*/
 
@@ -972,7 +972,7 @@
                  * LICENSE file in the root directory of this source tree. An additional grant
                  * of patent rights can be found in the PATENTS file in the same directory.
                  *
-                 * 
+                 *
                  */
 
 
@@ -1631,7 +1631,7 @@
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
  *
- * 
+ *
  */
 
 
@@ -2031,7 +2031,7 @@
                  * LICENSE file in the root directory of this source tree. An additional grant
                  * of patent rights can be found in the PATENTS file in the same directory.
                  *
-                 * 
+                 *
                  */
 
                 function makeEmptyFunction(arg) {
@@ -2074,7 +2074,7 @@
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
  *
- * 
+ *
  */
 
 
@@ -2120,12 +2120,12 @@
                 Licensed under the Apache License, Version 2.0 (the "License"); you may not use
                 this file except in compliance with the License. You may obtain a copy of the
                 License at http://www.apache.org/licenses/LICENSE-2.0
-                
+
                 THIS CODE IS PROVIDED ON AN *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
                 KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED
                 WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR PURPOSE,
                 MERCHANTABLITY OR NON-INFRINGEMENT.
-                
+
                 See the Apache Version 2.0 License for specific language governing permissions
                 and limitations under the License.
                 ***************************************************************************** */
@@ -2550,7 +2550,7 @@
                  * LICENSE file in the root directory of this source tree. An additional grant
                  * of patent rights can be found in the PATENTS file in the same directory.
                  *
-                 * 
+                 *
                  */
 
 
@@ -3226,7 +3226,7 @@
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
  *
- * 
+ *
  */
 
 
@@ -4587,7 +4587,7 @@
                  * LICENSE file in the root directory of this source tree. An additional grant
                  * of patent rights can be found in the PATENTS file in the same directory.
                  *
-                 * 
+                 *
                  */
 
 
@@ -5686,10 +5686,10 @@
                                     requestContainer.onSpeakingFinished();
                             }
                         };
-                        // process SSML markup into an array of either 
+                        // process SSML markup into an array of either
                         // * utterenance
                         // * number which is delay in msg
-                        // * url which is an audio file 
+                        // * url which is an audio file
                         BrowserSpeechSynthesizer.prototype.processNodes = function (nodes, output) {
                             for (var i = 0; i < nodes.length; i++) {
                                 var node = nodes[i];
@@ -5725,7 +5725,7 @@
                                         break;
                                     case 'say-as':
                                     case 'prosody': // ToDo: handle via msg.rate
-                                    case 'emphasis': // ToDo: can probably emulate via prosody + pitch 
+                                    case 'emphasis': // ToDo: can probably emulate via prosody + pitch
                                     case 'w':
                                     case 'phoneme': //
                                     case 'voice':
@@ -6246,7 +6246,7 @@
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
  *
- * 
+ *
  */
 
 
@@ -6915,7 +6915,7 @@
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
  *
- * 
+ *
  */
 
 
@@ -7403,7 +7403,7 @@
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
  *
- * 
+ *
  */
 
 
@@ -7770,7 +7770,7 @@
                         if (!content.media || content.media.length === 0) {
                             return null;
                         }
-                        // rendering every media in the media array. Validates every type as image, video, audio or a function that returns those values.  
+                        // rendering every media in the media array. Validates every type as image, video, audio or a function that returns those values.
                         return content.media.map(function (md, i) {
                             var t = (typeof type === 'string') ? type : type(md.url);
                             return React.createElement(Media, { type: t, src: md.url, onLoad: props.onImageLoad, poster: content.image && content.image.url, autoPlay: content.autostart, loop: content.autoloop, key: i });
@@ -8377,7 +8377,7 @@
                 $export.B = 16;  // bind
                 $export.W = 32;  // wrap
                 $export.U = 64;  // safe
-                $export.R = 128; // real proto method for `library` 
+                $export.R = 128; // real proto method for `library`
                 module.exports = $export;
 
                 /***/
@@ -8409,7 +8409,7 @@
                  * of patent rights can be found in the PATENTS file in the same directory.
                  *
                  * @typechecks
-                 * 
+                 *
                  */
 
                 /*eslint-disable no-self-compare */
@@ -9636,7 +9636,7 @@
                  * LICENSE file in the root directory of this source tree. An additional grant
                  * of patent rights can be found in the PATENTS file in the same directory.
                  *
-                 * 
+                 *
                  */
 
 
@@ -9847,7 +9847,7 @@
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
  *
- * 
+ *
  */
 
 
@@ -9899,7 +9899,7 @@
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
  *
- * 
+ *
  */
 
 
@@ -12994,7 +12994,7 @@
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
  *
- * 
+ *
  */
 
 
@@ -13632,7 +13632,7 @@
                  * LICENSE file in the root directory of this source tree. An additional grant
                  * of patent rights can be found in the PATENTS file in the same directory.
                  *
-                 * 
+                 *
                  */
 
 
@@ -14411,7 +14411,7 @@
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
  *
- * 
+ *
  */
 
 
@@ -14459,7 +14459,7 @@
                  * LICENSE file in the root directory of this source tree. An additional grant
                  * of patent rights can be found in the PATENTS file in the same directory.
                  *
-                 * 
+                 *
                  */
 
 
@@ -14513,7 +14513,7 @@
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
  *
- * 
+ *
  */
 
 
@@ -14579,7 +14579,7 @@
                  * LICENSE file in the root directory of this source tree. An additional grant
                  * of patent rights can be found in the PATENTS file in the same directory.
                  *
-                 * 
+                 *
                  */
 
 
@@ -14957,7 +14957,7 @@
                  * LICENSE file in the root directory of this source tree. An additional grant
                  * of patent rights can be found in the PATENTS file in the same directory.
                  *
-                 * 
+                 *
                  */
 
 
@@ -15559,7 +15559,7 @@
                     // dependsOnOwnProps is used by createMapToPropsProxy to determine whether to pass props as args
                     // to the mapToProps function being wrapped. It is also used by makePurePropsSelector to determine
                     // whether mapToProps needs to be invoked when props have changed.
-                    // 
+                    //
                     // A length of one signals that mapToProps does not depend on props from the parent component.
                     // A length of zero is assumed to mean mapToProps is getting args via arguments or ...args and
                     // therefore not reporting its length accurately..
@@ -15569,16 +15569,16 @@
 
                     // Used by whenMapStateToPropsIsFunction and whenMapDispatchToPropsIsFunction,
                     // this function wraps mapToProps in a proxy function which does several things:
-                    // 
+                    //
                     //  * Detects whether the mapToProps function being called depends on props, which
                     //    is used by selectorFactory to decide if it should reinvoke on props changes.
-                    //    
+                    //
                     //  * On first call, handles mapToProps if returns another function, and treats that
                     //    new function as the true mapToProps for subsequent calls.
-                    //    
+                    //
                     //  * On first call, verifies the first result is a plain object, in order to warn
                     //    the developer that their mapToProps function is not returning a valid result.
-                    //    
+                    //
                     function wrapMapToPropsFunc(mapToProps, methodName) {
                         return function initProxySelector(dispatch, _ref) {
                             var displayName = _ref.displayName;
@@ -15820,7 +15820,7 @@
                  * LICENSE file in the root directory of this source tree. An additional grant
                  * of patent rights can be found in the PATENTS file in the same directory.
                  *
-                 * 
+                 *
                  */
 
 
@@ -16212,7 +16212,7 @@
                  * LICENSE file in the root directory of this source tree. An additional grant
                  * of patent rights can be found in the PATENTS file in the same directory.
                  *
-                 * 
+                 *
                  */
 
 
@@ -22510,7 +22510,7 @@
                  * LICENSE file in the root directory of this source tree. An additional grant
                  * of patent rights can be found in the PATENTS file in the same directory.
                  *
-                 * 
+                 *
                  */
 
                 var isTextNode = __webpack_require__(227);
@@ -23075,7 +23075,7 @@
                  * LICENSE file in the root directory of this source tree. An additional grant
                  * of patent rights can be found in the PATENTS file in the same directory.
                  *
-                 * 
+                 *
                  * @typechecks static-only
                  */
 
@@ -29440,25 +29440,25 @@
 
                 /*
                 var TERMINATOR_RE = /[\n!#$%&*+\-:<=>@[\\\]^_`{}~]/;
-                
+
                 module.exports = function text(state, silent) {
                   var pos = state.pos,
                       idx = state.src.slice(pos).search(TERMINATOR_RE);
-                
+
                   // first char is terminator -> empty text
                   if (idx === 0) { return false; }
-                
+
                   // no terminator -> text till end of string
                   if (idx < 0) {
                     if (!silent) { state.pending += state.src.slice(pos); }
                     state.pos = state.src.length;
                     return true;
                   }
-                
+
                   if (!silent) { state.pending += state.src.slice(pos, pos + idx); }
-                
+
                   state.pos += idx;
-                
+
                   return true;
                 };*/
 
@@ -38874,7 +38874,7 @@
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
  *
- * 
+ *
  */
 
 
@@ -39409,7 +39409,7 @@
                  * LICENSE file in the root directory of this source tree. An additional grant
                  * of patent rights can be found in the PATENTS file in the same directory.
                  *
-                 * 
+                 *
                  */
 
 
@@ -39634,7 +39634,7 @@
                  * LICENSE file in the root directory of this source tree. An additional grant
                  * of patent rights can be found in the PATENTS file in the same directory.
                  *
-                 * 
+                 *
                  */
 
 
@@ -39714,7 +39714,7 @@
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
  *
- * 
+ *
  */
 
 
@@ -40269,7 +40269,7 @@
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
  *
- * 
+ *
  */
 
 
@@ -40370,7 +40370,7 @@
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
  *
- * 
+ *
  */
 
 
@@ -40589,7 +40589,7 @@
                  * LICENSE file in the root directory of this source tree. An additional grant
                  * of patent rights can be found in the PATENTS file in the same directory.
                  *
-                 * 
+                 *
                  */
 
 
@@ -40782,7 +40782,7 @@
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
  *
- * 
+ *
  */
 
 
@@ -41451,7 +41451,7 @@
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
  *
- * 
+ *
  */
 
 
@@ -42186,7 +42186,7 @@
                  * LICENSE file in the root directory of this source tree. An additional grant
                  * of patent rights can be found in the PATENTS file in the same directory.
                  *
-                 * 
+                 *
                  */
 
 
@@ -42486,7 +42486,7 @@
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
  *
- * 
+ *
  */
 
 
@@ -42688,7 +42688,7 @@
                  * LICENSE file in the root directory of this source tree. An additional grant
                  * of patent rights can be found in the PATENTS file in the same directory.
                  *
-                 * 
+                 *
                  */
 
 
@@ -43078,16 +43078,16 @@
                 /*
                   connect is a facade over connectAdvanced. It turns its args into a compatible
                   selectorFactory, which has the signature:
-                
+
                     (dispatch, options) => (nextState, nextOwnProps) => nextFinalProps
-                  
+
                   connect passes its args to connectAdvanced as options, which will in turn pass them to
                   selectorFactory each time a Connect component instance is instantiated or hot reloaded.
-                
+
                   selectorFactory returns a final props selector from its mapStateToProps,
                   mapStateToPropsFactories, mapDispatchToProps, mapDispatchToPropsFactories, mergeProps,
                   mergePropsFactories, and pure args.
-                
+
                   The resulting final props selector is called by the Connect component instance whenever
                   it receives new props or store state.
                  */
@@ -43572,7 +43572,7 @@
                  * LICENSE file in the root directory of this source tree. An additional grant
                  * of patent rights can be found in the PATENTS file in the same directory.
                  *
-                 * 
+                 *
                  */
 
 
@@ -43637,7 +43637,7 @@
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
  *
- * 
+ *
  */
 
 
@@ -44131,7 +44131,7 @@
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
  *
- * 
+ *
  */
 
 
@@ -44189,7 +44189,7 @@
                  * LICENSE file in the root directory of this source tree. An additional grant
                  * of patent rights can be found in the PATENTS file in the same directory.
                  *
-                 * 
+                 *
                  */
 
 
@@ -44356,7 +44356,7 @@
                  * LICENSE file in the root directory of this source tree. An additional grant
                  * of patent rights can be found in the PATENTS file in the same directory.
                  *
-                 * 
+                 *
                  */
 
 

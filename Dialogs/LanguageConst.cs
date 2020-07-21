@@ -16,18 +16,21 @@ namespace EmergencyServicesBot.Dialogs
         internal static readonly CultureInfo ciSpanish = new CultureInfo("es-US");
         internal static readonly CultureInfo ciChinese = new CultureInfo("zh-CN");
         internal static readonly CultureInfo ciFrench = new CultureInfo("fr-FR");
+        internal static readonly CultureInfo ciTurkish = new CultureInfo("tr-TR");
 
         internal const string enLanguageId = "en";
         internal const string esLanguageId = "es";
         internal const string frLanguageId = "fr";
         internal const string zhLanguageId = "zh-CN";
+        internal const string trLanguageId = "tr";
 
         internal const string enLanguageName = "English";
         internal const string esLanguageName = "Español";
         internal const string zhLanguageName = "中文";
         internal const string frLanguageName = "Français";
+        internal const string trLanguageName = "Türkçe";
 
-        internal static readonly string[] languages = new[] { enLanguageName, esLanguageName, zhLanguageName, frLanguageName };
-        internal static readonly string[] smsLanguages = new[] { $"1 -{enLanguageName}", $"2 -{esLanguageName}", $"3 -{zhLanguageName}", $"4 -{frLanguageName}" };
+        internal static readonly string[] languages = new[] { enLanguageName, esLanguageName, zhLanguageName, frLanguageName, trLanguageName };
+        internal static readonly string[] smsLanguages = new[] { $"1 -{enLanguageName}", $"2 -{esLanguageName}", $"3 -{zhLanguageName}", $"4 -{frLanguageName}", $"5 -{trLanguageName}" };
     }
 }

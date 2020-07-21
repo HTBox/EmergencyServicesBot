@@ -30,7 +30,7 @@ namespace EmergencyServicesBot.Dialogs
 
         public async Task StartAsync(IDialogContext context)
         {
-            /* Wait until the first message is received from the conversation and call MessageReceviedAsync 
+            /* Wait until the first message is received from the conversation and call MessageReceviedAsync
             *  to process that message. */
             context.Wait(this.MessageReceivedAsync);
         }
@@ -112,7 +112,7 @@ namespace EmergencyServicesBot.Dialogs
                 var detectedLanguage = languageInfo["language"];
                 context.UserData.SetValue(@"userLanguage", detectedLanguage);
                 context.UserData.SetValue(userDataCultureKey, GetCultureInfoFromLanguageId(detectedLanguage));
-                
+
             }
 
             else
@@ -143,6 +143,9 @@ namespace EmergencyServicesBot.Dialogs
                 case LanguageConst.frLanguageId:
                     userCulture = LanguageConst.ciFrench;
                     break;
+                case LanguageConst.trLanguageId:
+                    userCulture = LanguageConst.ciTurkish;
+                    break;
                 case LanguageConst.enLanguageId:
                 default:
                     userCulture = LanguageConst.ciEnglish;
@@ -160,12 +163,14 @@ namespace EmergencyServicesBot.Dialogs
             if ((choice.IndexOf(@"get answers", 0, StringComparison.OrdinalIgnoreCase) != -1) ||
                 (choice.IndexOf(@"Obtener Respuestas", 0, StringComparison.OrdinalIgnoreCase) != -1) ||
                 (choice.IndexOf(@"Obtenir les réponses", 0, StringComparison.OrdinalIgnoreCase) != -1) ||
-                (choice.IndexOf(@"其他问题", 0, StringComparison.OrdinalIgnoreCase) != -1))
+                (choice.IndexOf(@"其他问题", 0, StringComparison.OrdinalIgnoreCase) != -1)) ||
+                (choice.IndexOf(@"Cevabı gör", 0, StringComparison.OrdinalIgnoreCase) != -1))
                 context.Call(new QandADialog(), DoneWithSubdialog);
             else if ((choice.IndexOf(@"Select language", 0, StringComparison.OrdinalIgnoreCase) != -1) ||
                 (choice.IndexOf(@"Seleccione el idioma", 0, StringComparison.OrdinalIgnoreCase) != -1) ||
                 (choice.IndexOf(@"Sélectionner la langue", 0, StringComparison.OrdinalIgnoreCase) != -1) ||
-                (choice.IndexOf(@"选择语言", 0, StringComparison.OrdinalIgnoreCase) != -1))
+                (choice.IndexOf(@"选择语言", 0, StringComparison.OrdinalIgnoreCase) != -1)) ||
+                (choice.IndexOf(@"Dil seç", 0, StringComparison.OrdinalIgnoreCase) != -1))
                 context.Call(new SetLanguage(), DoneWithSubdialog);
         }
 
@@ -207,8 +212,8 @@ namespace EmergencyServicesBot.Dialogs
             var heroCard = new HeroCard
             {
                 Title = title,
-                Subtitle = "Hello. Hola. 你好. Bonjour.",
-                Text = "Say \"hi\" to begin, diga \"hola\" para comenzar, 说“嗨”开始, dites \"Bonjour\" pour commencer",
+                Subtitle = "Hello. Hola. 你好. Bonjour. Merhaba",
+                Text = "Say \"hi\" to begin, diga \"hola\" para comenzar, 说“嗨”开始, dites \"Bonjour\" pour commencer, Başlamak için \"merhaba\" diyebilirsiniz",
                 Images = new List<CardImage> { CI }
             };
 
@@ -226,9 +231,9 @@ namespace EmergencyServicesBot.Dialogs
     [Serializable]
     public class BasicQnAMakerDialog : QnAMakerDialog
     {
-        // Go to https://qnamaker.ai and feed data, train & publish your QnA Knowledgebase.        
+        // Go to https://qnamaker.ai and feed data, train & publish your QnA Knowledgebase.
         // Parameters to QnAMakerService are:
-        // Required: subscriptionKey, knowledgebaseId, 
+        // Required: subscriptionKey, knowledgebaseId,
         // Optional: defaultMessage, scoreThreshold[Range 0.0 – 1.0]
         public BasicQnAMakerDialog() : base(new QnAMakerService(new QnAMakerAttribute(Utils.GetAppSetting("QnASubscriptionKey"), Utils.GetAppSetting("QnAKnowledgebaseId"), "I could not find an answer to your question. Please try again or contact Houston 311.", 0.5)))
         { }
